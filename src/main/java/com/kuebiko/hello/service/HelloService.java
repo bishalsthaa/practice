@@ -1,14 +1,28 @@
 package com.kuebiko.hello.service;
 
-public class HelloService {
+import com.kuebiko.hello.dao.HelloDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    public String save(String data){
-        String temp = reverse(data);
+@Service
+public class HelloService implements HelloServiceInterface {
+    @Autowired
+    HelloDao dao;
+
+    @Override
+    public String save(String input) {
+        String temp = reverse(input);
         return temp;
     }
 
-    public String reverse(String data){
+    @Override
+    public String get(Long data) {
+        return dao.getFromRepo(data);
+    }
+
+    private String reverse(String data) {
         String reverseString = new StringBuilder(data).reverse().toString();
         return reverseString;
     }
+
 }
